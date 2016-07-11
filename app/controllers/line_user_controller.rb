@@ -3,8 +3,9 @@ class LineUserController < ApplicationController
     params_from_line = params['result']
     if params_from_line.present?
       user_mid = params_from_line[0]['content']['from']
-      @line_user = LineUser.first_or_create!(user_mid: user_mid)
-      send_sticker_to_user(user_mid: @line_user.user_mid) if user_mid != 'uffffffffffffffffffffffffffffffff'
+      line_user = LineUser.first_or_create!(user_mid: user_mid)
+      line_user_mid = line_user.user_mid
+      send_sticker_to_user(user_mid: line_user_mid) if line_user_mid != 'uffffffffffffffffffffffffffffffff'
 
       head :ok, content_type: "text/html"
     else
@@ -13,9 +14,13 @@ class LineUserController < ApplicationController
   end
 
   private
+
+  # Line API
+  # https://developers.line.me/bot-api/api-reference
+  
   def send_sticker_to_user(user_mid: nil)
     send_content = {
-      'to' => user_mid,
+      'to' => [user_mid],
       'toChannel' => 1383378250, #fixed
       'eventType' => '138311608800106203', #fixed
       'content' => {
@@ -34,7 +39,7 @@ class LineUserController < ApplicationController
 
   def send_text_to_user(user_mid: nil)
     send_content = {
-      'to' => user_mid,
+      'to' => [user_mid],
       'toChannel' => 1383378250, #fixed
       'eventType' => '138311608800106203', #fixed
       'content' => {
