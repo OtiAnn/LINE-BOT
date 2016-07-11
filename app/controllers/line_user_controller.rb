@@ -1,6 +1,6 @@
-class GetApiController < ApplicationController
-  def line
-    permitted = params.permit('result' => { 'content' => 'from' })
+class LineUserController < ApplicationController
+  def get_api
+    permitted = params.require(:line_user).permit('result' => { 'content' => 'from' })
     if permitted.permitted?
       user_mid = permitted['result'][0]['content']['from']
       LineUser.first_or_create!(user_mid: user_mid)
