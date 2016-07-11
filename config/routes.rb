@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  post 'callback' => 'get_api#line'
+  post 'callback' => 'line_user#get_api'
 end
