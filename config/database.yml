@@ -49,6 +49,6 @@ test:
 #
 production:
   <<: *default
-  database: LineBot_production
-  username: LineBot
-  password: <%= ENV['LINEBOT_DATABASE_PASSWORD'] %>
+  database: <%= ENV['DATABASE_NAME'] %>
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
