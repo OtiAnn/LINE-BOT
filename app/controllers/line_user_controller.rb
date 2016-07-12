@@ -3,7 +3,7 @@ class LineUserController < ApplicationController
     params_from_line = params['result']
     if params_from_line.present?
       user_mid = params_from_line[0]['content']['from']
-      line_user = LineUser.first_or_create!(user_mid: user_mid)
+      line_user = LineUser.where(user_mid: user_mid).first_or_create!
       line_user_mid = line_user.user_mid
       send_sticker_to_user(user_mid: line_user_mid) if line_user_mid != 'uffffffffffffffffffffffffffffffff'
 
